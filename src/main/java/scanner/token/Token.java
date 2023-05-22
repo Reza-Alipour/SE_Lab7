@@ -1,11 +1,12 @@
 package scanner.token;
 
+import scanner.interfaces.IToken;
 import scanner.type.Type;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Token {
+public class Token implements IToken {
     public Type type;
     public String value;
 
@@ -59,5 +60,10 @@ public class Token {
 //
 //        }
         throw new IllegalArgumentException();
+    }
+
+    @Override
+    public String getValue() {
+        return value;
     }
 }

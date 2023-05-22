@@ -2,7 +2,7 @@ package codeGenerator;
 
 import codeGenerator.interfaces.IAddress;
 import codeGenerator.interfaces.IMemory;
-import scanner.token.Token;
+import scanner.interfaces.IToken;
 
 public class CodeGeneratorFacade {
 
@@ -35,7 +35,7 @@ public class CodeGeneratorFacade {
     }
 
 
-    public void semanticFunction(int func, Token next) {
+    public void semanticFunction(int func, IToken next) {
         codeGenerator.semanticFunction(func, next);
     }
 

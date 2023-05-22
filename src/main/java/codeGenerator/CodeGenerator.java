@@ -2,7 +2,7 @@ package codeGenerator;
 
 import Log.Log;
 import errorHandler.ErrorHandler;
-import scanner.token.Token;
+import scanner.interfaces.IToken;
 import semantic.symbol.Symbol;
 import semantic.symbol.SymbolTable;
 import semantic.symbol.SymbolType;
@@ -28,7 +28,7 @@ public class CodeGenerator {
         memory.pintCodeBlock();
     }
 
-    public void semanticFunction(int func, Token next) {
+    public void semanticFunction(int func, IToken next) {
         Log.print("codegenerator : " + func);
         switch (func) {
             case 0:
@@ -157,13 +157,13 @@ public class CodeGenerator {
         }
     }
 
-    public void pid(Token next) {
+    public void pid(IToken next) {
         if (symbolStack.size() > 1) {
             String methodName = symbolStack.pop();
             String className = symbolStack.pop();
             try {
 
-                Symbol s = symbolTable.get(className, methodName, next.value);
+                Symbol s = symbolTable.get(className, methodName, next.getValue());
                 varType t = varType.Int;
                 switch (s.type) {
                     case Bool:
@@ -184,7 +184,7 @@ public class CodeGenerator {
         } else {
             ss.push(new Address(0, varType.Non));
         }
-        symbolStack.push(next.value);
+        symbolStack.push(next.getValue());
     }
 
     public void fpid() {
@@ -205,12 +205,12 @@ public class CodeGenerator {
 
     }
 
-    public void kpid(Token next) {
-        ss.push((Address) symbolTable.get(next.value));
+    public void kpid(IToken next) {
+        ss.push((Address) symbolTable.get(next.getValue()));
     }
 
-    public void intpid(Token next) {
-        ss.push(new Address(Integer.parseInt(next.value), varType.Int, TypeAddress.Imidiate));
+    public void intpid(IToken next) {
+        ss.push(new Address(Integer.parseInt(next.getValue()), varType.Int, TypeAddress.Imidiate));
     }
 
     public void startCall() {
