@@ -33,8 +33,11 @@ public class Memory implements IMemory {
         return lastDataAddress - dataSize;
     }
 
-    public int saveMemory() {
+    public void saveMemory() {
         codeBlock.add(new _3AddressCode());
+    }
+
+    public int getMemorySize() {
         return codeBlock.size() - 1;
     }
 
