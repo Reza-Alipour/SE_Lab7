@@ -21,9 +21,11 @@ public class Memory implements IMemory {
         lastDataAddress = stratDataMemoryAddress;
     }
 
-    public int getTemp() {
+    public void updateTempIndex(){
         lastTempIndex += tempSize;
-        return lastTempIndex - tempSize;
+    }
+    public int getTemp() {
+        return lastTempIndex;
     }
 
     public int getDateAddress() {
