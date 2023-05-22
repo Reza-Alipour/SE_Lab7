@@ -51,32 +51,28 @@ public class Parser {
                 Log.print(currentAction.toString());
                 //Log.print("");
 
-                switch (currentAction.action) {
-                    case shift:
-                        parsStack.push(currentAction.number);
-                        lookAhead = lexicalAnalyzer.getNextToken();
+                if (currentAction.action instanceof ShiftAct) {
+                    parsStack.push(currentAction.number);
+                    lookAhead = lexicalAnalyzer.getNextToken();
 
-                        break;
-                    case reduce:
-                        Rule rule = rules.get(currentAction.number);
-                        for (int i = 0; i < rule.RHS.size(); i++) {
-                            parsStack.pop();
-                        }
+                } else if (currentAction.action instanceof ReduceAct) {
+                    Rule rule = rules.get(currentAction.number);
+                    for (int i = 0; i < rule.RHS.size(); i++) {
+                        parsStack.pop();
+                    }
 
-                        Log.print(/*"state : " +*/ parsStack.peek() + "\t" + rule.LHS);
+                    Log.print(/*"state : " +*/ parsStack.peek() + "\t" + rule.LHS);
 //                        Log.print("LHS : "+rule.LHS);
-                        parsStack.push(parseTable.getGotoTable(parsStack.peek(), rule.LHS));
-                        Log.print(/*"new State : " + */parsStack.peek() + "");
+                    parsStack.push(parseTable.getGotoTable(parsStack.peek(), rule.LHS));
+                    Log.print(/*"new State : " + */parsStack.peek() + "");
 //                        Log.print("");
-                        try {
-                            codeGeneratorFacade.semanticFunction(rule.semanticAction, lookAhead);
-                        } catch (Exception e) {
-                            Log.print("Code Genetator Error");
-                        }
-                        break;
-                    case accept:
-                        finish = true;
-                        break;
+                    try {
+                        codeGeneratorFacade.semanticFunction(rule.semanticAction, lookAhead);
+                    } catch (Exception e) {
+                        Log.print("Code Genetator Error");
+                    }
+                } else if (currentAction.action instanceof AcceptAct) {
+                    finish = true;
                 }
                 Log.print("");
             } catch (Exception ignored) {
