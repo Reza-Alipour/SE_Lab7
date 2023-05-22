@@ -19,6 +19,9 @@
 
 در فایل CodeGenerator.java توابع save و jpf_save تغییر کرده اند. در کلاس Memory نیز تابع getMemorySize اضافه شده و متد saveMemory تغییر کرده است.
 
+## الگو Self Encapsulate Field (حالت دوم)
+در اینجا از کلاس Memory برای فیلدهای آن، متد getter و setter ایجاد می‌کنیم.
+
 # پرسش‌ها
 ## سوال 1
 ### کد تمیز
