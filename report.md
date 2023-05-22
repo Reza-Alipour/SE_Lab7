@@ -4,6 +4,13 @@
 در کلاس CodeGenerator توابع semanticFunction، pid، kpid و intpid دچار تغییرات جزئی شده‌اند. در کلاس CodeGeneratorFacade تابع semanticFunction دچار یک تغییر کوچک شده است. در کلاس ParseTable تغییراتی در constructoe صورت گرفته است. در کلاس Rule و GrammerSymbol نیز تغییراتی انجام گرفته است. کلاس‌های CodeGeneratorFacade , ScannerFacade و IToken ، IAddress و IMemory نیز اضافه شده اند. مشابه تغییرات فوق در package CodeGenerator نیز انجام گرفته است.
 ## الگو Replace Conditional with Polymorphism 
 در این الگو به جای اینکه از شرط برای مشخص کردن عملیات مربوط به اشیای مختلف استفاده کنیم، برای هر نوع شی یک کلاس فرزند ایجاد می‌کنیم که عملیات مربوطه را با رونویسی تابع اصلی انجام دهد.
+
+کلاس‌های AcceptAct، ReduceAct و ShiftAct به عنوان فرزندان کلاس Act ساخته شده‌اند که متد actionToString را رونویسی می‌کنند. در کلاس Action متد toString تغییر کرده و همچنین enum act از آن حذف شده و به شکل یک کلاس انتزاعی درآمده است. در کلاس Parser متد startParse تغییرات زیادی داشته و کلاس ParseTable نیز به شکل جزئی تغییر کرده.
+## الگو Separate Query From Modifier
+همانطور که از اسم آن مشخص است، در این الگو قسمت‌هایی از کد که داده‌ها را دریافت می‌کند (کوئری) از قسمت‌های کد که داده‌ها را تغییر می‌دهد جدا شده است.
+
+در فایل codeGenerator.java توابع زیادی از جمله add ، sub، equal و and تغییر جزئی داشته‌اند. متد getTemp از کلاس Memory تغییر کرده و updateTempIndex اضافه شده است.
+
 # پرسش‌ها
 ## سوال 1
 ### کد تمیز
