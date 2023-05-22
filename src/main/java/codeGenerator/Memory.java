@@ -1,6 +1,7 @@
 package codeGenerator;
 
 import codeGenerator.interfaces.IMemory;
+
 import java.util.ArrayList;
 
 /**
@@ -15,49 +16,90 @@ public class Memory implements IMemory {
     private final int dataSize = 4;
     private final int tempSize = 4;
 
-    public Memory() {
-        codeBlock = new ArrayList<_3AddressCode>();
-        lastTempIndex = stratTempMemoryAddress;
-        lastDataAddress = stratDataMemoryAddress;
+    public ArrayList<_3AddressCode> getCodeBlock() {
+        return codeBlock;
     }
 
-    public void updateTempIndex(){
-        lastTempIndex += tempSize;
+    public int getLastTempIndex() {
+        return lastTempIndex;
     }
+
+    public int getLastDataAddress() {
+        return lastDataAddress;
+    }
+
+    public int getStratTempMemoryAddress() {
+        return stratTempMemoryAddress;
+    }
+
+    public int getStratDataMemoryAddress() {
+        return stratDataMemoryAddress;
+    }
+
+    public int getDataSize() {
+        return dataSize;
+    }
+
+    public int getTempSize() {
+        return tempSize;
+    }
+
+    public void setCodeBlock(ArrayList<_3AddressCode> codeBlock) {
+        this.codeBlock = codeBlock;
+    }
+
+    public void setLastTempIndex(int lastTempIndex) {
+        this.lastTempIndex = lastTempIndex;
+    }
+
+    public void setLastDataAddress(int lastDataAddress) {
+        this.lastDataAddress = lastDataAddress;
+    }
+
+    public Memory() {
+        this.setCodeBlock(new ArrayList<_3AddressCode>());
+        this.setLastTempIndex(getStratTempMemoryAddress());
+        this.setLastDataAddress(getStratDataMemoryAddress());
+    }
+
+    public void updateTempIndex() {
+        this.setLastTempIndex(getLastTempIndex() + getTempSize());
+    }
+
     public int getTemp() {
         return lastTempIndex;
     }
 
     public int getDateAddress() {
-        lastDataAddress += dataSize;
-        return lastDataAddress - dataSize;
+        this.setLastDataAddress(getLastDataAddress() + getDataSize());
+        return getLastDataAddress() - getDataSize();
     }
 
     public void saveMemory() {
-        codeBlock.add(new _3AddressCode());
+        getCodeBlock().add(new _3AddressCode());
     }
 
     public int getMemorySize() {
-        return codeBlock.size() - 1;
+        return getCodeBlock().size() - 1;
     }
 
     public void add3AddressCode(Operation op, Address opr1, Address opr2, Address opr3) {
-        codeBlock.add(new _3AddressCode(op, opr1, opr2, opr3));
+        getCodeBlock().add(new _3AddressCode(op, opr1, opr2, opr3));
     }
 
     public void add3AddressCode(int i, Operation op, Address opr1, Address opr2, Address opr3) {
-        codeBlock.remove(i);
-        codeBlock.add(i, new _3AddressCode(op, opr1, opr2, opr3));
+        getCodeBlock().remove(i);
+        getCodeBlock().add(i, new _3AddressCode(op, opr1, opr2, opr3));
     }
 
     public int getCurrentCodeBlockAddress() {
-        return codeBlock.size();
+        return getCodeBlock().size();
     }
 
     public void pintCodeBlock() {
         System.out.println("Code Block");
-        for (int i = 0; i < codeBlock.size(); i++) {
-            System.out.println(i + " : " + codeBlock.get(i).toString());
+        for (int i = 0; i < getCodeBlock().size(); i++) {
+            System.out.println(i + " : " + getCodeBlock().get(i).toString());
         }
     }
 }
