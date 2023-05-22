@@ -206,7 +206,7 @@ public class CodeGenerator {
     }
 
     public void kpid(Token next) {
-        ss.push(symbolTable.get(next.value));
+        ss.push((Address) symbolTable.get(next.value));
     }
 
     public void intpid(Token next) {

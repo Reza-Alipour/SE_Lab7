@@ -1,10 +1,11 @@
 package codeGenerator;
 
+import codeGenerator.interfaces.IAddress;
 /**
  * Created by mohammad hosein on 6/28/2015.
  */
 
-public class Address {
+public class Address implements IAddress {
     public int num;
     public TypeAddress Type;
     public varType varType;

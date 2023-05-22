@@ -1,9 +1,8 @@
 package semantic.symbol;
 
-import codeGenerator.Address;
-import codeGenerator.Memory;
-import codeGenerator.TypeAddress;
-import codeGenerator.varType;
+import codeGenerator.CodeGeneratorFacade;
+import codeGenerator.interfaces.IAddress;
+import codeGenerator.interfaces.IMemory;
 import errorHandler.ErrorHandler;
 
 import java.util.ArrayList;
@@ -12,16 +11,16 @@ import java.util.Map;
 
 public class SymbolTable {
     private Map<String, Klass> klasses;
-    private Map<String, Address> keyWords;
-    private Memory mem;
+    private Map<String, IAddress> keyWords;
     private SymbolType lastType;
+    private final CodeGeneratorFacade codeGeneratorFacade;
 
-    public SymbolTable(Memory memory) {
-        mem = memory;
+    public SymbolTable(IMemory memory) {
+        codeGeneratorFacade = new CodeGeneratorFacade().bulidMemory(memory);
         klasses = new HashMap<>();
         keyWords = new HashMap<>();
-        keyWords.put("true", new Address(1, varType.Bool, TypeAddress.Imidiate));
-        keyWords.put("false", new Address(0, varType.Bool, TypeAddress.Imidiate));
+        keyWords.put("true", codeGeneratorFacade.getBoolmidiateAddress(1));
+        keyWords.put("false", codeGeneratorFacade.getBoolmidiateAddress(0));
     }
 
     public void setLastType(SymbolType type) {
@@ -36,7 +35,7 @@ public class SymbolTable {
     }
 
     public void addField(String fieldName, String className) {
-        klasses.get(className).Fields.put(fieldName, new Symbol(lastType, mem.getDateAddress()));
+        klasses.get(className).Fields.put(fieldName, new Symbol(lastType, codeGeneratorFacade.getDateAddress()));
     }
 
     public void addMethod(String className, String methodName, int address) {
@@ -55,7 +54,7 @@ public class SymbolTable {
         if (klasses.get(className).Methodes.get(methodName).localVariable.containsKey(localVariableName)) {
             ErrorHandler.printError("This variable already defined");
         }
-        klasses.get(className).Methodes.get(methodName).localVariable.put(localVariableName, new Symbol(lastType, mem.getDateAddress()));
+        klasses.get(className).Methodes.get(methodName).localVariable.put(localVariableName, new Symbol(lastType, codeGeneratorFacade.getDateAddress()));
 //        }catch (NullPointerException e){
 //            e.printStackTrace();
 //        }
@@ -65,7 +64,7 @@ public class SymbolTable {
         klasses.get(className).superClass = klasses.get(superClass);
     }
 
-    public Address get(String keywordName) {
+    public IAddress get(String keywordName) {
         return keyWords.get(keywordName);
     }
 
@@ -155,8 +154,8 @@ public class SymbolTable {
             this.codeAddress = codeAddress;
             this.returnType = returnType;
             this.orderdParameters = new ArrayList<>();
-            this.returnAddress = mem.getDateAddress();
-            this.callerAddress = mem.getDateAddress();
+            this.returnAddress = codeGeneratorFacade.getDateAddress();
+            this.callerAddress = codeGeneratorFacade.getDateAddress();
             this.parameters = new HashMap<>();
             this.localVariable = new HashMap<>();
         }
@@ -168,7 +167,7 @@ public class SymbolTable {
         }
 
         public void addParameter(String parameterName) {
-            parameters.put(parameterName, new Symbol(lastType, mem.getDateAddress()));
+            parameters.put(parameterName, new Symbol(lastType, codeGeneratorFacade.getDateAddress()));
             orderdParameters.add(parameterName);
         }
 
